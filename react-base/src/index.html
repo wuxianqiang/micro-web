@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script type="systemjs-importmap">
+    {
+      "imports": {
+        "react": "https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.development.js",
+        "react-dom": "https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.development.min.js",
+        "react-router-dom": "https://cdnjs.cloudflare.com/ajax/libs/react-router-dom/6.14.0/react-router-dom.development.js",
+        "react-router": "https://cdnjs.cloudflare.com/ajax/libs/react-router/6.14.1/react-router.development.js",
+        "@remix-run/router": "https://cdn.jsdelivr.net/npm/@remix-run/router@1.7.1/dist/router.umd.min.js"
+      }
+    }
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/systemjs/dist/system.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/systemjs/dist/extras/amd.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/systemjs/dist/extras/named-exports.js"></script>
+  <script type="systemjs-importmap" src="/import-map.json"></script>
+  <script type="systemjs-module" src="import:@project/runtime"></script>
+</head>
+<body>
+  <div id="root"></div>
+</body>
+</html>
