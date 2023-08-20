@@ -34,23 +34,28 @@ export default async function loadJson(url) {
   }
 }
 
+let el = null
 export function start(rootElement) {
+  el = createRoot(rootElement);
   window.addEventListener('load', () => {
     const path = location.hash.slice(1);
-    appPerformanceChange(rootElement, path)
+    appPerformanceChange(el, path)
   })
-
   window.addEventListener('hashchange', () => {
-    console.log(' hang change ===？')
     const path = location.hash.slice(1);
-    appPerformanceChange(rootElement, path)
+    appPerformanceChange(el, path)
   })
+  const oldFn = history.pushState;
+  history.pushState = async function (...args) {
+    await appPerformanceChange(el, args[2].slice(1))
+    oldFn.call(this, ...args);
+  }
 }
 
 async function appPerformanceChange (rootElement, path) {
   let nextApp = apps.find((app) => {
     return app.activeWhen(path)
-  })
+  }) || apps[0]
   nextApp = nextApp || defaultApp;
   if (nextApp !== activeApp) {
     activeApp = nextApp;
@@ -59,15 +64,15 @@ async function appPerformanceChange (rootElement, path) {
     if (!importMap) {
       return console.log('加载子应用出错：', activeApp.name)
     }
-    System.addImportMap(importMap);
+    await System.addImportMap(importMap);
     // 加载路由文件
-    const runtimeConfig = await activeApp.load()
+    const runtimeConfig = await activeApp.load();
+
     const appContext = Object.create(null);
     appContext.routes = runtimeConfig.routes;
     appContext.Root = runtimeConfig.Root;
     // 挂载到页面渲染
-    const root = createRoot(rootElement);
-    root.render(<App app={appContext} />);
+    rootElement.render(<App app={appContext} />);
   }
   return null
 }

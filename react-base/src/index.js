@@ -10,8 +10,8 @@ registerApplication({
   load() {
     return System.import('project1/runtime');
   },
-  activeWhen() {
-    return true;
+  activeWhen(path) {
+    return ['/home', '/about'].includes(path);
   },
 });
 registerApplication({
@@ -20,8 +20,8 @@ registerApplication({
   load() {
     return System.import('project2/runtime');
   },
-  activeWhen() {
-    return '/blog';
+  activeWhen(path) {
+    return ['/blog'].includes(path);
   },
 });
 
